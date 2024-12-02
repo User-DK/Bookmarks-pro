@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Smart Summarizer</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <nav class="side-nav">
+    <button class="nav-btn active" data-page="summarize">
+      <img src="../icons/file-solid.svg" alt="Summarize">
+    </button>
+    <button class="nav-btn" data-page="bookmarks">
+      <img src="../icons/bookmark-solid.svg" alt="Bookmarks">
+    </button>
+  </nav>
+
+  <main>
+    <div id="summarize-page" class="page active">
+      <h2>Summarize Page</h2>
+      <div class="form-group">
+
+
+        <label for="summary-type">Summary Type:</label>
+        <select id="summary-type">
+          <option value="key-points">Key Points</option>
+          <option value="tl;dr" selected>TL;DR</option>
+          <option value="teaser">Teaser</option>
+          <option value="headline">Headline</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="summary-length">Length:</label>
+        <select id="summary-length">
+          <option value="short">Short</option>
+          <option value="medium" selected>Medium</option>
+          <option value="long">Long</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="summary-content">Summary from: </label>
+        <select id="summary-content">
+          <option value="selected-text" selected>Selected Text</option>
+          <option value="full-page">Full Page</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="summary-language">Language:</label>
+        <select id="summary-language">
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="summary-tone">Tone: </label>
+        <select id="summary-tone">
+          <option value="as-is" selected>Neutral</option>
+          <option value="more-formal">Formal</option>
+          <option value="more-casual">Casual</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="summary-role">Target Audience:</label>
+        <select id="summary-role">
+          <option value="enthusiast" selected>Enthusiast</option>
+          <option value="developer">Developer</option>
+          <option value="kid">Kid</option>
+          <option value="senior citizen">Senior Citizen</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="summary-context">Additional Context:</label>
+        <textarea id="summary-context" placeholder="Add any specific context for better summarization"></textarea>
+      </div>
+
+      <button id="generate-summary" class="primary-btn">Generate Summary</button>
+
+      <!-- <div id="summary-result" class="hidden">
+        <h3>Summary</h3>
+        <div id="summary-res"></div>
+        <div class="action-buttons">
+          <button id="add-bookmark" class="secondary-btn">Add to Bookmarks</button>
+          <button id="add-notes" class="secondary-btn">Add to Google Notes</button>
+        </div>
+      </div>
+    </div> -->
+      <div id="summary-result" class="hidden">
+        <h3>Summary</h3>
+        <textarea id="summary-res" rows="10" cols="50"></textarea>
+        <div class="action-buttons">
+          <button id="add-bookmark" class="secondary-btn">Add to Bookmarks</button>
+          <button id="add-notes" class="secondary-btn">Add to Google Notes</button>
+        </div>
+      </div>
+
+      <div id="bookmarks-page" class="page">
+        <h2>Bookmarks</h2>
+        <div class="toolbar">
+          <button id="import-bookmarks">Import</button>
+          <button id="export-bookmarks">Export</button>
+        </div>
+        <div id="bookmarks-list"></div>
+      </div>
+  </main>
+
+  <script type="module" src="language.js"></script>
+
+  <script type="module" src="index.js"></script>
+</body>
+
+</html>
