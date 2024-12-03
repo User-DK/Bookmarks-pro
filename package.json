@@ -14,8 +14,15 @@
     "@rollup/plugin-commonjs": "28.0.1",
     "@rollup/plugin-node-resolve": "15.3.0",
     "dompurify": "3.1.7",
-    "marked": "14.1.4",
     "rollup": "4.24.4",
-    "rollup-plugin-copy": "^3.5.0"
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-postcss": "^4.0.2"
+  },
+  "dependencies": {
+    "marked": "^15.0.3",
+    "sanitize-html": "^2.13.1",
+    "uninstall": "^0.0.0"
   }
 }

@@ -3,40 +3,46 @@
 
 <head>
   <title>Smart Summarizer</title>
-  <link rel="stylesheet" href="index.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 
 <body>
   <nav class="side-nav">
     <button class="nav-btn active" data-page="summarize">
-      <i class="fa-regular fa-file fa-xl" style="color: #001625;"></i>
+      <i class="fa-regular fa-file fa-xl" style="color: #001625"></i>
     </button>
     <button class="nav-btn" data-page="bookmarks">
-      <i class="fa-regular fa-bookmark fa-xl" style="color: #001625;"></i>
+      <i class="fa-regular fa-bookmark fa-xl" style="color: #001625"></i>
     </button>
   </nav>
 
   <main>
     <div id="summarize-page" class="page active">
-      <h2 style="text-align: center;margin-top: 0;"><u>Summarize Page
+      <h2 style="text-align: center; margin-top: 0">
+        <u>Summarize Page
           <hr />
-        </u></h2>
+        </u>
+      </h2>
       <div id="summary-result">
         <h3>Summary</h3>
         <textarea id="summary-res"></textarea>
-        <div class="action-buttons" style="display: flex; justify-content: space-evenly;">
-          <button id="add-bookmark" class="secondary-btn"><i class="fa-regular fa-bookmark fa-sm"
-              style="color: #ffffff; margin-right: 5px;"></i>Add to Bookmarks</button>
+        <div id="loading-spinner" style="display: none; text-align: center; margin-top: 20px;">
+          <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+          <p>Processing...</p>
+        </div>
+        <div class="action-buttons" style="display: flex; justify-content: space-evenly">
+          <button id="add-bookmark" class="secondary-btn">
+            <i class="fa-regular fa-bookmark fa-sm" style="color: #ffffff; margin-right: 5px"></i>Add to Bookmarks
+          </button>
           <!-- <button id="add-notes" class="secondary-btn"><i class="fa-regular fa-file-lines fa-sm"
               style="color: #ffffff; margin-right: 5px;"></i>Add to Google Notes</button> -->
         </div>
       </div>
       <hr />
 
-
-      <div style="display: flex; justify-content: space-evenly;">
-        <div class="form-group" style="flex: 1; margin-right: 10px;">
+      <div style="display: flex; justify-content: space-evenly">
+        <div class="form-group" style="flex: 1; margin-right: 10px">
           <label for="summary-type">Summary Type:</label>
           <select id="summary-type">
             <option value="key-points">Key Points</option>
@@ -46,7 +52,7 @@
           </select>
         </div>
 
-        <div class="form-group" style="flex: 1; margin-right: 10px;">
+        <div class="form-group" style="flex: 1; margin-right: 10px">
           <label for="summary-length">Length:</label>
           <select id="summary-length">
             <option value="short">Short</option>
@@ -55,7 +61,7 @@
           </select>
         </div>
 
-        <div class="form-group" style="flex: 1;">
+        <div class="form-group" style="flex: 1">
           <label for="summary-tone">Tone: </label>
           <select id="summary-tone">
             <option value="as-is" selected>Neutral</option>
@@ -65,9 +71,8 @@
         </div>
       </div>
 
-      <div style="display: flex; justify-content: space-evenly;">
-
-        <div class="form-group" style="flex: 1; margin-right: 10px;">
+      <div style="display: flex; justify-content: space-evenly">
+        <div class="form-group" style="flex: 1; margin-right: 10px">
           <label for="summary-content">Summary from: </label>
           <select id="summary-content">
             <option value="selected-text" selected>Selected Text</option>
@@ -75,7 +80,7 @@
           </select>
         </div>
 
-        <div class="form-group" style="flex: 1;">
+        <div class="form-group" style="flex: 1">
           <label for="summary-role">Target Audience:</label>
           <select id="summary-role">
             <option value="enthusiast" selected>Enthusiast</option>
@@ -84,35 +89,47 @@
             <option value="senior citizen">Senior Citizen</option>
           </select>
         </div>
-
       </div>
 
       <div class="form-group">
         <label for="summary-context">Additional Context:</label>
-        <textarea id="summary-context" style="width: 90%; padding: 10px; border-radius: 5px; border: 1px solid"
-          placeholder="Add any specific context for better summarization"></textarea>
+        <textarea id="summary-context" style="
+              width: 90%;
+              padding: 10px;
+              border-radius: 5px;
+              border: 1px solid;
+            " placeholder="Add any specific context for better summarization"></textarea>
       </div>
 
-
-      <button id="generate-summary" class="primary-btn"><i class="fa-solid fa-gears fa-sm"
-          style="color: #ffffff; margin-right: 5px;"></i>Generate Summary</button>
-
+      <button id="generate-summary" class="primary-btn">
+        <i class="fa-solid fa-gears fa-sm" style="color: #ffffff; margin-right: 5px"></i>Generate Summary
+      </button>
     </div>
 
     <div id="bookmarks-page" class="page">
-      <h2 style="text-align: center;margin-top: 0;"><u>Bookmarks
+      <h2 style="text-align: center; margin-top: 0">
+        <u>Bookmarks
           <hr />
-        </u></h2>
+        </u>
+      </h2>
       <div class="toolbar">
-        <button id="import-bookmarks" class="primary-btn"><i class="fa-solid fa-file-import fa-sm"
-            style="color: #ffffff; margin-right: 5px;"></i>Import</button>
-        <button id="export-bookmarks" class="primary-btn"><i class="fa-solid fa-file-export fa-sm"
-            style="color: #ffffff; margin-right: 5px;"></i>Export</button>
+        <button id="import-bookmarks" class="primary-btn">
+          <i class="fa-solid fa-file-import fa-sm" style="color: #ffffff; margin-right: 5px"></i>Import
+        </button>
+        <button id="export-bookmarks" class="primary-btn">
+          <i class="fa-solid fa-file-export fa-sm" style="color: #ffffff; margin-right: 5px"></i>Export
+        </button>
       </div>
+      <div class="search-bar" style="display: flex;margin: 10px 0; text-align: center;">
+        <input type="text" id="search-bookmarks" placeholder="Search bookmarks..."
+          style="padding: 5px; border-radius: 4px; margin-right: 4px;" />
+        <button id="search-button" class="primary-btn" style="padding: 5px 10px;"><i
+            class="fa-solid fa-magnifying-glass fa-sm" style="color: #ffffff;margin-right: 5px;"></i>Search</button>
+      </div>
+
       <div id="bookmarks-list"></div>
     </div>
   </main>
-
 
   <script type="module" src="index.js"></script>
 </body>

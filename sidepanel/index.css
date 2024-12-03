@@ -92,6 +92,18 @@ select, textarea {
    margin: 0 auto;
 }
 
+button {
+
+  background: #1a223b;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+   margin: 0 auto;
+}
+
 .primary-btn:hover {
   background: #000e39;
 }
@@ -169,8 +181,8 @@ select, textarea {
 }
 
 .bookmark-item .favicon {
-  width: 16px;
-  height: 16px;
+  width: 32px;
+  height: 32px;
   margin-right: 0.5rem;
 }
 
