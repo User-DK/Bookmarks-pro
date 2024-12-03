@@ -1,4 +1,3 @@
-/* General Styles */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -6,30 +5,16 @@ body {
   min-height: 100vh;
 }
 
-/* Side Navigation */
 .side-nav {
   width: 48px;
-  background: #f5f5f5;
+  background: #aab1b9;
   padding: 1rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  border-right: 2px solid #000000;
 }
-
-/* .side-nav {
-  width: 48px;
-  background: #f5f5f5;
-  padding: 1rem 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  position: fixed;
-  right: 0;
-  top: 0;
-  height: 100%;
-} */
 
 .nav-btn {
   width: 32px;
@@ -42,7 +27,7 @@ body {
 }
 
 .nav-btn.active {
-  background: #e0e0e0;
+  background: #ffffff;
 }
 
 .nav-btn img {
@@ -50,11 +35,12 @@ body {
   height: 20px;
 }
 
-/* Main Content */
 main {
   flex: 1;
   padding: 1rem;
-  background: #ffffff;
+  background: #F3F4F6;
+  color: #001625;
+  /* font-size: 0.9rem; */
 }
 
 .page {
@@ -65,9 +51,9 @@ main {
   display: block;
 }
 
-/* Form Elements */
 .form-group {
-  margin-bottom: 1rem;
+  margin-top: 1rem;
+  /* margin-bottom: 1rem; */
 }
 
 label {
@@ -79,44 +65,57 @@ label {
 select, textarea {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #ddd;
+  border: 1px solid #6a6a6a;
   border-radius: 4px;
   margin-bottom: 1rem;
+  color:#36454F
 }
 
-textarea {
+/* textarea {
   min-height: 100px;
   resize: vertical;
-}
+  border: 1px solid #6a6a6a;
+  border-radius: 4px;
+} */
 
-/* Buttons */
 .primary-btn {
-  background: #1a73e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a223b;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
+   margin: 0 auto;
+}
+
+.primary-btn:hover {
+  background: #000e39;
 }
 
 .secondary-btn {
-  background: #f8f9fa;
-  color: #1a73e8;
-  border: 1px solid #1a73e8;
-  padding: 0.75rem 1.5rem;
+  background: #1a223b;
+  color: #ffffff;
+  border: 1px solid #000000;
+  padding: 0.5rem 1rem;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
 }
 
-/* Summary Result */
+.secondary-btn:hover {
+  background: #000e39;
+}
+/* 
 #summary-result {
-  margin-top: 2rem;
+  margin-top: 0;
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 4px;
-}
+} */
 
 .action-buttons {
   display: flex;
@@ -124,7 +123,6 @@ textarea {
   margin-top: 1rem;
 }
 
-/* Bookmarks */
 #bookmarks-list {
   margin-top: 1rem;
 }
@@ -135,6 +133,107 @@ textarea {
   margin-bottom: 1rem;
 }
 
+/* .bookmark-item{
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+} */
+.bookmark-item {
+  position: relative; /* Ensure the container is positioned relative */
+  padding: 0.5rem 1rem;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  transition: background-color 0.3s, transform 0.3s; /* Add transition for hover effect */
+  color: #0f2c40;
+  font-weight: 500;
+  /* cursor: pointer; */
+}
+
+.bookmark-item:hover {
+  background-color: #b1b1b1; /* Change the background color on hover */
+  transform: translateY(-5px); /* Add a slight lift effect on hover */
+  color: #023b61;
+}
+
+.timestamp-container {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 1rem;
+}
+
+.timestamp-container small {
+  font-size: 0.7rem; /* Make the font size very small */
+  color: #666; /* Optional: Change the color to a lighter shade */
+}
+
+.bookmark-item .favicon {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.5rem;
+}
+
 .hidden {
   display: none;
+}
+
+#summary-result {
+  /* padding: 1rem; */
+  /* border: 1px solid #000000; */
+  border-radius: 4px;
+  /* background-color: #f9f9f9; */
+  margin-bottom: 2rem;
+}
+
+#summary-result h3 {
+  /* margin-top: -0.6rem; */
+  margin-bottom: 0.2rem;
+  /* text-align: center; */
+}
+
+#summary-res {
+  width: 100%;
+  height: 200px; /* Adjust the height as needed */
+  resize: vertical; /* Allow vertical resizing */
+  overflow-y: auto; /* Make the textarea scrollable */
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 0.5rem;
+}
+
+/* .secondary-btn {
+  background: #1a223b;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+} */
+
+select:hover,
+textarea:hover,
+input:hover {
+  border-color: #000000; /* Change border color on hover */
+}
+
+select:focus,
+textarea:focus,
+input:focus {
+  border-color: #1a223b; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(26, 34, 59, 0.5); /* Add box shadow on focus */
+  outline: none; /* Remove default outline */
+}
+
+
+.bookmark-item:hover .bookmark-title {
+  max-width: none; /* Expand to full width on hover */
 }

@@ -19,6 +19,7 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
   });
 });
 
+
 // Generate Summary
 document.getElementById('generate-summary').addEventListener('click', async () => {
   const type = document.getElementById('summary-type').value
@@ -29,11 +30,11 @@ document.getElementById('generate-summary').addEventListener('click', async () =
   const tone = document.getElementById('summary-tone').value
 
   try {
-    let { content, url, title, favIcon } = contenttype === 'selected-text' ? await getPageSelection() : await extractPageContent();
+    const { content, url, title, favIconUrl } = contenttype === 'selected-text' ? await getPageSelection() : await extractPageContent();
     console.log("Extracted content:", content);
-    // console.log("Options:", options);
     console.log("URL:", url);
     console.log("Title:", title);
+    console.log("favIconUrl URL:", favIconUrl);
     if (content === '') {
       alert("No text selected. Please select some text to summarize.");
       return;
@@ -52,18 +53,14 @@ document.getElementById('generate-summary').addEventListener('click', async () =
     const maxCharLimit = 4000;
 
     const summary = await summarizeAndRewrite(content, summarizerOptions, rewriterOptions, maxCharLimit, role, context);
-    // console.log("Content after prompt:", summary);
-
 
     const sanitizedSummary = DOMPurify.sanitize(summary);
     console.log("Sanitized summary:", sanitizedSummary);
-
     const summaryContainer = document.getElementById('summary-res');
     summaryContainer.value = sanitizedSummary; // Set the value of the textarea
     document.getElementById('summary-result').classList.remove('hidden');
     console.log("Summary displayed in HTML");
 
-    // Attach bookmark functionality
     document.getElementById('add-bookmark').onclick = async () => {
       const editedSummary = summaryContainer.value;
       await db.addBookmark({
@@ -71,63 +68,69 @@ document.getElementById('generate-summary').addEventListener('click', async () =
         title,
         summary: editedSummary,
         timestamp: new Date().toISOString(),
-        faviconUrl: favIcon,
+        favIconUrl: favIconUrl,
       });
       updateBookmarksList();
     };
   } catch (error) {
     console.error("Error generating summary:", error);
-    alert("Failed to generate summary. See console for details.");
   }
 });
 
-//Update bookmarks list
-// async function updateBookmarksList() {
-//   const bookmarks = await db.getBookmarks();
-//   const container = document.getElementById('bookmarks-list');
-//   container.innerHTML = '';
+function truncateText(text, maxLength) {
+  if (text.length <= maxLength) {
+    return text;
+  }
+  return text.substring(0, maxLength) + '...';
+}
 
-//   bookmarks.forEach(bookmark => {
-//     const div = document.createElement('div');
-//     div.className = 'bookmark-item';
-//     div.innerHTML = `
-//       <h3><a href="${bookmark.url}" target="_blank">${bookmark.title}</a></h3>
-//       <p>${bookmark.summary}</p>
-//       <small>${new Date(bookmark.timestamp).toLocaleString()}</small>
-//     `;
-//     container.appendChild(div);
-//   });
-// }
-
-// Update bookmarks list
 async function updateBookmarksList() {
   const bookmarks = await db.getBookmarks();
   const container = document.getElementById('bookmarks-list');
-  container.innerHTML = '';  // Clear the container before adding new content
+  container.innerHTML = '';  
 
   bookmarks.forEach(bookmark => {
     const div = document.createElement('div');
     div.className = 'bookmark-item';
+    console.log('faviconUrl After:', bookmark.favIconUrl);
+    console.log(bookmark);
+    const truncatedTitle = truncateText(bookmark.title, 30);
 
-    // Construct the favicon HTML
-    const faviconHtml = bookmark.favicon
-      ? `<img src="data:image/png;base64,${bookmark.favicon}" alt="Favicon" class="favicon" />`
-      : `<img src="../icons/bookmark-solid.svg" alt="Default Favicon" class="favicon" />`; // Default favicon in case of failure
+    const faviconHtml = bookmark.favIconUrl
+      ? `<img src="${bookmark.favIconUrl}" alt="Favicon" class="favicon" />`
+      : `<i class="fa-solid fa-globe fa-xl"></i>`; 
 
     div.innerHTML = `
       <div class="bookmark-header">
         ${faviconHtml}
-        <h3><a href="${bookmark.url}" target="_blank">${bookmark.title}</a></h3>
+        <a href="${bookmark.url}" target="_blank" class="bookmark-title" data-full-title="${bookmark.title}">
+            ${truncatedTitle}
+          </a>
       </div>
-      <p>${bookmark.summary}</p>
+      <p style="margin-top: 0.4rem;
+  font-size: 1.5rem;">${bookmark.summary}</p>
+      <div class="timestamp-container">
       <small>${new Date(bookmark.timestamp).toLocaleString()}</small>
+      </div>
     `;
     container.appendChild(div);
+  });
+
+  document.querySelectorAll('.bookmark-title').forEach(titleElement => {
+    const truncatedTitle = titleElement.textContent;
+    const fullTitle = titleElement.getAttribute('data-full-title');
+
+    titleElement.addEventListener('mouseenter', () => {
+      titleElement.textContent = fullTitle;
+    });
+
+    titleElement.addEventListener('mouseleave', () => {
+      titleElement.textContent = truncatedTitle;
+    });
   });
 }
 
 
-// Import/Export Bookmarks
 document.getElementById('export-bookmarks').addEventListener('click', async () => {
   const url = await db.exportBookmarks();
   const a = document.createElement('a');

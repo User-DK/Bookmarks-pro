@@ -17,8 +17,5 @@
     "marked": "14.1.4",
     "rollup": "4.24.4",
     "rollup-plugin-copy": "^3.5.0"
-  },
-  "dependencies": {
-    "@google/generative-ai": "^0.21.0"
   }
 }
