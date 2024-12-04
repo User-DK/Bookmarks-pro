@@ -1,4 +1,6 @@
-# <u>Bookmarks PRO</u>
+## <b><u>Bookmarks PRO</u></b>- <i>Smarter Bookmarks for a Smarter You!</i>
+
+<img src="./images/bookmark-pro.png" width="200">
 
 ### Running this extension
 
