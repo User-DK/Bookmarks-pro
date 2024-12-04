@@ -213,6 +213,7 @@ button {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  color: #000;
 }
 
 .action-buttons {

@@ -48,15 +48,6 @@ document
         console.error("No text selected. Please select some text to summarize.");
         return;
       }
-      // text,
-      //   summarizerOptions = { type: "key-points", length: "long" },
-      // const  rewriterOptions = { tone: "developer", format: "plain", length: "concise" },
-      // enum AISummarizerType { "tl;dr", "key-points", "teaser", "headline" };
-      // enum AISummarizerFormat { "plain-text", "markdown" };
-      // enum AISummarizerLength { "short", "medium", "long" };
-      // enum AIRewriterTone { "as-is", "more-formal", "more-casual" };
-      // enum AIRewriterFormat { "as-is", "plain-text", "markdown" };
-      // enum AIRewriterLength { "as-is", "shorter", "longer" };
       const summarizerOptions = {
         type: type,
         format: "plain-text",
@@ -80,21 +71,20 @@ document
 
       let sanitizedSummary = DOMPurify.sanitize(summary);
 
-      // sanitizedSummary = sanitizeHtml(sanitizedSummary, {
-      //   allowedTags: [],
-      //   allowedAttributes: {},
-      // });
       const summaryContainer = document.getElementById("summary-res");
       summaryContainer.value = sanitizedSummary;
-      console.log("Summary generated successfully!");
-      // document.getElementById('summary-result').classList.remove('hidden');
 
       document.getElementById("add-bookmark").onclick = async () => {
         const editedSummary = summaryContainer.value;
         if (!editedSummary) {
-          alert("Please generate a summary before adding a bookmark.");
+          const notaddbookmark = document.getElementById("bookmark-not-added");
+          notaddbookmark.style.display = "block";
+          setTimeout(() => {
+            notaddbookmark.style.display = "none";
+          }, 3000);
           return;
         }
+
         try {
           await db.addBookmark({
             url,
@@ -103,7 +93,11 @@ document
             timestamp: new Date().toISOString(),
             favIconUrl: favIconUrl,
           });
-          console.log("Bookmark added successfully!");
+          const addbookmark = document.getElementById("bookmark-added");
+          addbookmark.style.display = "block";
+          setTimeout(() => {
+            addbookmark.style.display = "none";
+          }, 3000);
         }
         catch (error) {
           console.error(`Error adding bookmark: ${error}`);
@@ -136,8 +130,11 @@ function truncateText(text, maxLength) {
   return text.substring(0, maxLength) + "...";
 }
 
-async function updateBookmarksList() {
-  const bookmarks = await db.getBookmarks();
+async function updateBookmarksList(bookmarks = null) {
+  if (!bookmarks) {
+    bookmarks = await db.getBookmarks();
+  }
+  // const bookmarks = await db.getBookmarks();
   const container = document.getElementById("bookmarks-list");
   container.innerHTML = "";
 
@@ -173,10 +170,8 @@ async function updateBookmarksList() {
   document.querySelectorAll(".delete-bookmark").forEach((button) => {
     button.addEventListener("click", async (e) => {
       const id = e.currentTarget.dataset.id;
-      console.log("Deleting bookmark with id:", id); // Add this line for debugging
       try {
         await db.deleteBookmark(id);
-        console.log("Bookmark deleted successfully!");
         updateBookmarksList();
       } catch (error) {
         console.error("Failed to delete bookmark:", error);
